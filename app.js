@@ -1,6 +1,6 @@
 var express = require('express')
   , path = require('path')
-  , denariusapi = require('chaincoin-node-api')
+  , innovaapi = require('chaincoin-node-api')
   , favicon = require('static-favicon')
   , logger = require('morgan')
   , cookieParser = require('cookie-parser')
@@ -14,10 +14,10 @@ var express = require('express')
 
 var app = express();
 
-// denariusapi
-denariusapi.setWalletDetails(settings.wallet);
+// innovaapi
+innovaapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
-  denariusapi.setAccess('only', ['getinfo', 'gethashespersec', 'getmininginfo','getdifficulty', 'getconnectioncount',
+  innovaapi.setAccess('only', ['getinfo', 'gethashespersec', 'getmininginfo','getdifficulty', 'getconnectioncount',
     'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'getmasternodecount', 'getmasternodecountonline', 'getmasternodelist', 'gettxoutsetinfo', 'sendrawtransaction']);
 } else {
   // enable additional heavy api calls
@@ -32,7 +32,7 @@ if (settings.heavy != true) {
     getsupply - Returns the current money supply.
     getmaxmoney - Returns the maximum possible money supply.
   */
-  denariusapi.setAccess('only', ['getinfo', 'getstakinginfo', 'gethashespersec', 'getdifficulty', 'getconnectioncount',
+  innovaapi.setAccess('only', ['getinfo', 'getstakinginfo', 'gethashespersec', 'getdifficulty', 'getconnectioncount',
     'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction','getmaxmoney', 'getvote',
     'getmaxvote', 'getphase', 'getreward', 'getnextrewardestimate', 'getnextrewardwhenstr',
     'getnextrewardwhensec', 'getsupply', 'getmasternodecount', 'getmasternodecountonline', 'getmasternodelist', 'gettxoutsetinfo', 'sendrawtransaction']);
@@ -69,7 +69,7 @@ app.use(function (req, res, next) {
 });
 
 // routes
-app.use('/api', denariusapi.app);
+app.use('/api', innovaapi.app);
 app.use('/', routes);
 app.use('/ext/getmoneysupply', function(req,res){
   lib.get_supply(function(supply){
